@@ -1,0 +1,5 @@
+{
+  "name": "X-Growth Pilot",
+  "description": "A SaaS-style dashboard for analyzing X (Twitter) performance, generating content variations, and optimizing scheduling based on engagement data.",
+  "requestFramePermissions": []
+}
