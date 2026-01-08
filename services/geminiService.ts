@@ -2,9 +2,14 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { TweetData, CalendarEntry, AnalysisResult } from '../types';
 
 const getAiClient = () => {
-  const apiKey = process.env.API_KEY;
-  if (!apiKey) {
-    throw new Error("API Key not found in process.env.API_KEY");
+  // Robust check: try global window object (injected by index.html) or standard process.env
+  // This bypasses bundler replacements that might set process.env.API_KEY to undefined
+  const apiKey = (typeof window !== 'undefined' && (window as any).process?.env?.API_KEY) 
+                 || process.env.API_KEY;
+
+  if (!apiKey || apiKey.includes("INSERISCI_QUI")) {
+    console.error("API Key is missing or invalid config");
+    throw new Error("API Key invalid. Please configure it in index.html");
   }
   return new GoogleGenAI({ apiKey });
 };
