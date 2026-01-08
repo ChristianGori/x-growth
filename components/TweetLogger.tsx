@@ -61,10 +61,11 @@ const TweetLogger: React.FC<TweetLoggerProps> = ({ tweets, setTweets, user }) =>
     setIsSaving(true);
 
     try {
-      const tweetPayload = {
+      // FIX: Firestore throws error if field is 'undefined'.
+      // We construct the object and conditionally add imageUrl only if it has a value.
+      const tweetPayload: Record<string, any> = {
         userId: user.uid,
         text: formData.text,
-        imageUrl: formData.imageUrl || undefined,
         views: Number(formData.views) || 0,
         likes: Number(formData.likes) || 0,
         comments: Number(formData.comments) || 0,
@@ -72,8 +73,12 @@ const TweetLogger: React.FC<TweetLoggerProps> = ({ tweets, setTweets, user }) =>
         timestamp: Date.now(),
       };
 
+      if (formData.imageUrl) {
+        tweetPayload.imageUrl = formData.imageUrl;
+      }
+
       // Save to Firebase
-      const savedTweet = await saveTweetToDb(tweetPayload);
+      const savedTweet = await saveTweetToDb(tweetPayload as any);
 
       // Update local state immediately with the ID from firebase
       setTweets(prev => [savedTweet as TweetData, ...prev]);
