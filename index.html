@@ -22,6 +22,21 @@
         }
       }
     </script>
+    
+    <!-- CONFIGURAZIONE API KEY -->
+    <script>
+      // IMPORTANTE: Poiché questa è una webapp frontend senza backend,
+      // le variabili d'ambiente di Vercel NON sono accessibili qui.
+      // Devi incollare la tua chiave API reale tra le virgolette qui sotto.
+      
+      window.process = {
+        env: {
+          // CANCELLA IL TESTO TRA LE VIRGOLETTE E INCOLLA LA TUA CHIAVE CHE INIZIA CON "AIza..."
+          API_KEY: "AIzaSyB7Hp7e_OSQfNiWvxQ1FVzTF_x9qGD2vSw" 
+        }
+      };
+    </script>
+
   <script type="importmap">
 {
   "imports": {
@@ -37,10 +52,8 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-slate-50 text-slate-900 antialiased">
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
-</body>
+  </body>
 </html>
